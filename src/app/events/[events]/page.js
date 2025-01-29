@@ -5,6 +5,10 @@ import { useParams } from "next/navigation";
 import sampleSocietiesData from "@/app/components/sampleSocietiesData";
 import { sampleEventsData2 } from "@/app/components/sampleEventsData";
 import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { Calendar, Clock, MapPin, ArrowLeft, User } from "lucide-react"
+import Image from "next/image";
 import fetchEventsToDisplay from "@/app/apiFunctions/fetchEventsToDisplay";
 import Link from "next/link";
 
@@ -59,26 +63,47 @@ export default function individualEvent() {
     //need to add link, to send you to society page, and add ability to display society icon below
 
     return (
-        <> {selectedEvent2 && (
-          <div>
-          <p>placeholder page for individual event</p>
-          {selectedEvent2.eventUrlLink ? (
-  <button>
-    <Link href={`${selectedEvent2.eventUrlLink}`} target="_blank" rel="noopener noreferrer">
-      Link
-    </Link>
-  </button>
-) : (
-  null
-)}
-
-          
-          <p>{selectedEvent2.eventName}</p>
-          <Link href={`/societies/${selectedEvent2.society.documentId}`}>
-            <p>{selectedEvent2.society.username}</p>
-          </Link>
+      <div className="flex flex-col min-h-screen">
+        <div className="relative h-96">
+          <Image src={`http://localhost:1337${selectedEvent?.eventImage?.url || "/eton.jpeg"}`} alt={selectedEvent2?.eventName} layout="fill" objectFit="cover" />
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <h1 className="text-5xl font-bold text-white text-center px-4">{selectedEvent2?.eventName}</h1>
           </div>
-    )}
-        </>
+        </div>
+        <div className="max-w-3xl mx-auto px-4 py-8">
+          <Link href="/events" className="inline-flex items-center text-blue-600 hover:underline mb-6">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Events
+          </Link>
+          <div className="flex flex-wrap justify-between items-center mb-6">
+            <div className="flex items-center mr-4 mb-2">
+              <Calendar className="mr-2 h-5 w-5 text-gray-500" />
+              <span>{selectedEvent2?.eventDate}</span>
+            </div>
+            <div className="flex items-center mr-4 mb-2">
+              <Clock className="mr-2 h-5 w-5 text-gray-500" />
+              <span>{selectedEvent2?.eventTime}</span>
+            </div>
+            <div className="flex items-center mb-2">
+              <MapPin className="mr-2 h-5 w-5 text-gray-500" />
+              <span>{selectedEvent2?.eventLocation}</span>
+            </div>
+          </div>
+          <p className="text-gray-600 mb-6">{selectedEvent2?.eventDescription}</p>
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold mb-2">Organized by:</h2>
+            <Link href={`/societies/${selectedEvent2?.society?.documentId}`} className="text-blue-600 hover:underline">
+              {selectedEvent2?.society?.username}
+            </Link>
+          </div>
+          {selectedEvent2?.eventUrlLink && (
+            <Button asChild className="w-full">
+              <Link href={selectedEvent2?.eventUrlLink} target="_blank" rel="noopener noreferrer">
+                Event Website
+              </Link>
+            </Button>
+          )}
+        </div>
+      </div>
     )
 }
