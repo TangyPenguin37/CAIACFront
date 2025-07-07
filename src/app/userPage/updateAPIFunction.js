@@ -1,6 +1,6 @@
 
 'use client'
-const token = localStorage.getItem('jwt');
+const token = typeof window !== 'undefined' ? localStorage.getItem('jwt') : null;
 console.log("token in fetchSocietuEventsAPI is:", token);
 
 

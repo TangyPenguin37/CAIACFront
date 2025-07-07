@@ -65,7 +65,7 @@ console.log("eventImage value is:", eventImage);
           </div>
           <div className="text-right">
             <div className="bg-secondary text-secondary-foreground rounded-full px-3 py-1">
-              <p className="text-xs text-center">{society.username}</p>
+              {/* <p className="text-xs text-center">{society.username}</p> */}
             </div>
           </div>
         </div>

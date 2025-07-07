@@ -11,8 +11,8 @@ let { data: event, error } = await supabase
   
 
   if (error) {
-    console.error('Error fetching events:', error);
-    return [];
+    console.error(error);
+    return null;
   }
 
   return data;
